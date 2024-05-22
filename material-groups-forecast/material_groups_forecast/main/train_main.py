@@ -13,6 +13,7 @@ class TrainMain(TrainArguments):
     def run(self):
         pass
 
+
 def main():
     TrainMain().run()
 
