@@ -10,7 +10,7 @@ class TrainArguments:
         self.config = configparser.ConfigParser()
 
         self.parser = ArgumentParser()
-        self.parser.add_argument("--forecasted_group", choices=["material", "budget"], type=str)
+        self.parser.add_argument("--forecasted_group", choices=["material", "budget", "budget2"], type=str)
         self.parser.add_argument("--start_date", type=lambda d: datetime.strptime(d, self.fmt).date())
         self.parser.add_argument("--end_date", type=lambda d: datetime.strptime(d, self.fmt).date())
 
