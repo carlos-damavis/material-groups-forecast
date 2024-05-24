@@ -1,0 +1,15 @@
+,forecastedGroup,fecha_entrada,peso_neto,weekDay,month,problematicDates,covid
+0,PVE,2024-01-01,4720,1,1,False,True
+1,PVE,2024-01-02,1420,2,1,True,False
+2,PVE,2024-01-03,660,3,1,False,False
+3,PVE,2024-01-04,780,4,1,False,True
+4,PVE,2024-01-05,1365,5,1,False,False
+5,PVE,2024-01-06,3200,6,1,False,False
+6,PVE,2024-01-07,3500,7,1,False,False
+7,RU,2024-01-01,3200,1,1,True,True
+8,RU,2024-01-02,7700,2,1,True,False
+9,RU,2024-01-03,879,3,1,True,False
+10,RU,2024-02-16,654,4,2,False,False
+11,RU,2024-02-17,0,5,2,False,False
+12,RU,2024-02-18,1200,6,2,False,True
+13,RU,2024-02-19,0,7,2,False,False
