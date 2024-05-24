@@ -2,7 +2,7 @@ import os
 import unittest
 from datetime import date
 
-from pandas import read_csv, ArrowDtype
+from pandas import read_csv, ArrowDtype, date_range
 from pandas.testing import assert_frame_equal
 from pyarrow import table, schema
 
@@ -24,11 +24,20 @@ class TestTrainingDataDayGrouper(unittest.TestCase):
 
         expected = table(
             {
-                "forecastedGroup": ["RCD", "RECHAZO ENVASES", "RS GII", "RU", "RU"],
-                "fecha_entrada": [date(2005, 3, 17), date(2005, 3, 10), date(2005, 3, 28),
-                                  date(2005, 3, 12), date(2005, 3, 26)],
-                "peso_neto": [4720, 1420, 660, 2680, 500]
+                "forecastedGroup": ["RCD"]*22 + ["RECHAZO ENVASES"]*22 + ["RS GII"]*22 + ["RU"]*22,
+                "fecha_entrada": [d for d in date_range("2005-03-07", "2005-03-28")]*4,
+                "peso_neto": [0]*22*4
             }, schema=schema(processed_materials_loads_schema)).to_pandas(types_mapper=ArrowDtype)
+        mask = (expected.forecastedGroup == "RCD") & (expected.fecha_entrada == date(2005, 3, 17))
+        expected.loc[mask, "peso_neto"] = 4720
+        mask = (expected.forecastedGroup == "RECHAZO ENVASES") & (expected.fecha_entrada == date(2005, 3, 10))
+        expected.loc[mask, "peso_neto"] = 1420
+        mask = (expected.forecastedGroup == "RS GII") & (expected.fecha_entrada == date(2005, 3, 28))
+        expected.loc[mask, "peso_neto"] = 660
+        mask = (expected.forecastedGroup == "RU") & (expected.fecha_entrada == date(2005, 3, 12))
+        expected.loc[mask, "peso_neto"] = 2680
+        mask = (expected.forecastedGroup == "RU") & (expected.fecha_entrada == date(2005, 3, 26))
+        expected.loc[mask, "peso_neto"] = 500
 
         result = self.training_data_grouper.group(data)
 
@@ -40,9 +49,9 @@ class TestTrainingDataDayGrouper(unittest.TestCase):
 
         expected = table(
             {
-                "forecastedGroup": ["PVE", "PVE"],
-                "fecha_entrada": [date(2005, 3, 10), date(2005, 3, 26)],
-                "peso_neto": [1420, 1480]
+                "forecastedGroup": ["PVE"]*22,
+                "fecha_entrada": date_range("2005-03-07", "2005-03-28"),
+                "peso_neto": [0]*3 + [1420] + [0]*15 + [1480] + [0]*2
             }, schema=schema(processed_materials_loads_schema)).to_pandas(types_mapper=ArrowDtype)
 
         result = self.training_data_grouper.group(data)
@@ -55,10 +64,16 @@ class TestTrainingDataDayGrouper(unittest.TestCase):
 
         expected = table(
             {
-                "forecastedGroup": ["PAPEL-EETT", "RU-PVE", "VIDRIO-GENERAL"],
-                "fecha_entrada": [date(2005, 3, 12), date(2005, 3, 26), date(2005, 3, 7)],
-                "peso_neto": [3380, 500, 4440]
+                "forecastedGroup": ["PAPEL-EETT"]*22 + ["RU-PVE"]*22 + ["VIDRIO-GENERAL"]*22,
+                "fecha_entrada": [d for d in date_range("2005-03-07", "2005-03-28")]*3,
+                "peso_neto": [0]*22*3
             }, schema=schema(processed_materials_loads_schema)).to_pandas(types_mapper=ArrowDtype)
+        mask = (expected.forecastedGroup == "PAPEL-EETT") & (expected.fecha_entrada == date(2005, 3, 12))
+        expected.loc[mask, "peso_neto"] = 3380
+        mask = (expected.forecastedGroup == "RU-PVE") & (expected.fecha_entrada == date(2005, 3, 26))
+        expected.loc[mask, "peso_neto"] = 500
+        mask = (expected.forecastedGroup == "VIDRIO-GENERAL") & (expected.fecha_entrada == date(2005, 3, 7))
+        expected.loc[mask, "peso_neto"] = 4440
 
         result = self.training_data_grouper.group(data)
 
