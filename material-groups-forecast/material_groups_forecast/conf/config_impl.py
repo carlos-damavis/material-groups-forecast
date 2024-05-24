@@ -22,12 +22,16 @@ class Config(Config):
 
         self.values = {
             'bigquery_credentials': credentials,
-            'bigquery_table_id': os.environ['bigquery_table_id'],
+            'bigquery_read_table_id': os.environ['bigquery_read_table_id'],
+            'bigquery_table_month_id': os.environ['bigquery_table_month_id'],
+            'bigquery_table_week_id': os.environ['bigquery_table_week_id'],
+            'bigquery_table_day_id': os.environ['bigquery_table_day_id'],
             'storage_data_path': os.environ['storage_data_path'],
             'stage_data_path': os.environ['stage_data_path'],
             'bigquery_project_id': os.environ['bigquery_project_id'],
             'bigquery_dataset_id': os.environ['bigquery_dataset_id'],
             'tmp_bigquery_bucket': os.environ['tmp_bigquery_bucket']
+
         }
 
     def get(self, key: str) -> Any:
@@ -35,4 +39,3 @@ class Config(Config):
             return self.values[key]
         except KeyError:
             raise ValueError(f"The value for the key {key} doesn't exists")
-

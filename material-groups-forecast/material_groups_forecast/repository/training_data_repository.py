@@ -11,5 +11,5 @@ class TrainingDataRepository(abc.ABC):
     def get(self, start_date: date, end_date: date) -> DataFrame:
         ...
 
-    def save_data(self, df: DataFrame, override: bool, start_date: Optional[date] = None):
+    def save_data(self, df: DataFrame, table_id: str, override: bool):
         ...

@@ -1,7 +1,7 @@
 import datetime
 import os
 
-#from material_groups_forecast import ROOT_PATH
+from material_groups_forecast import ROOT_PATH
 from argument.train_arguments import TrainArguments
 
 from repository.resource.bigquery.bigquery_resource_imp import BigQueryResourceImp
@@ -20,26 +20,12 @@ class TrainMain(TrainArguments):
 
 
 def main():
-    #TrainMain().run()
-
-    bigquery_client = BigQueryClientImp(credentials=os.getenv('GOOGLE_APPLICATION_CREDENTIALS'))
-
-    bq = BigQueryResourceImp(
-            bigquery_client,
-            'prueba'
-        )
-    #pd001-datawarehouse-dev.SAP.AI-GESTION-CARGAS
-    rows = bq.read(
-                    table=os.getenv('BQ_AI_TABLE'),
-                    start='2024-01-01',
-                    end='2024-05-01')
+    args = TrainArguments
+    start_date = None if args.is_historic() else args.get_start_date()
+    end_date = None if args.is_historic() else args.get_end_date()
 
 
-
-
-
-    #or row in rows:
-    #    print(row)
+    TrainMain().run()
 
 
 if __name__ == "__main__":
