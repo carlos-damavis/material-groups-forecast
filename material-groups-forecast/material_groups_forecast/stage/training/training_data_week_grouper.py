@@ -1,5 +1,3 @@
-from typing import Dict
-
 from pandas import DataFrame
 
 from material_groups_forecast.stage.training.training_data_grouper import TrainingDataGrouper
