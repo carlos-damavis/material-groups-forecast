@@ -1,0 +1,11 @@
+forecastedGroup,fecha_entrada,peso_neto,weekDay,month,problematicDates,covid
+RU,2016-01-01,371220,5,1,False,False
+RU,2016-01-02,1236500,6,1,False,False
+RU,2016-01-03,765280,7,1,False,False
+RU,2016-01-04,1121160,1,1,False,False
+RU,2016-01-05,987260,2,1,False,False
+RU,2016-01-06,710800,3,1,False,False
+RU,2016-01-07,1044100,4,1,False,False
+RU,2016-01-08,1140640,5,1,False,False
+RU,2016-01-09,1103590,6,1,False,False
+RU,2016-01-10,725620,7,1,False,False

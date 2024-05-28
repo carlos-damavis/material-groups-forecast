@@ -31,7 +31,6 @@ class TestTrainingDataWeekGrouper(unittest.TestCase):
 
         expected = {
             "forecastedGroup": ["PVE", "RU", "RU"],
-            "yearMonth": ["2024-01", "2024-01", "2024-02"],
             "fecha_entrada": [date(2024, 1, 1), date(2024, 1, 1), date(2024, 2, 16)],
             "peso_neto": [15645, 11779, 1854],
             "month": [1, 1, 2],
@@ -54,7 +53,6 @@ class TestTrainingDataWeekGrouper(unittest.TestCase):
 
         expected = {
             "forecastedGroup": ["PVE", "RU", "RU"],
-            "yearMonth": ["2024-01", "2024-01", "2024-02"],
             "fecha_entrada": [date(2024, 1, 1), date(2024, 1, 1), date(2024, 2, 16)],
             "peso_neto": [15645, 11779, 1854],
             "month": [1, 1, 2],

@@ -2,6 +2,7 @@ from datetime import date
 
 from material_groups_forecast.repository.training_data_repository import TrainingDataRepository
 from material_groups_forecast.stage.common.regressors_adder import RegressorsAdder
+from material_groups_forecast.stage.training.models_all_groups_trainer import ModelsAllGroupsTrainer
 from material_groups_forecast.stage.training.training_data_processor import TrainingDataProcessor
 from material_groups_forecast.stage.training.training_data_grouper import TrainingDataGrouper
 
@@ -14,7 +15,8 @@ class TrainPipeline:
             training_data_day_grouper: TrainingDataGrouper,
             regressors_adder: RegressorsAdder,
             training_data_week_grouper: TrainingDataGrouper,
-            training_data_month_grouper: TrainingDataGrouper
+            training_data_month_grouper: TrainingDataGrouper,
+            models_all_groups_trainer: ModelsAllGroupsTrainer
     ):
         self.training_data_repository = training_data_repository
         self.training_data_processor = training_data_processor
@@ -22,6 +24,7 @@ class TrainPipeline:
         self.regressors_adder = regressors_adder
         self.training_data_week_grouper = training_data_week_grouper
         self.training_data_month_grouper = training_data_month_grouper
+        self.models_all_groups_trainer = models_all_groups_trainer
 
     def run(self, start_date: date, end_date: date) -> None:
 
@@ -31,4 +34,10 @@ class TrainPipeline:
         training_data_day = self.regressors_adder.add(training_data_day)
         training_data_week = self.training_data_week_grouper.group(training_data_day)
         training_data_month = self.training_data_month_grouper.group(training_data_day)
+
+        models_day_level = self.models_all_groups_trainer.train(training_data_day)
+        models_week_level = self.models_all_groups_trainer.train(training_data_week)
+        models_month_level = self.models_all_groups_trainer.train(training_data_month)
+
+
 

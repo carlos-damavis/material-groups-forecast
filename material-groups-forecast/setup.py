@@ -7,7 +7,9 @@ setup(
     url="",
     license="",
     install_requires=[
+        "holidays==0.47",
         "pandas==2.2.2",
+        "prophet==1.1.5",
         "pyarrow==15.0.2",
         "scikit-learn==1.5.0"
     ],

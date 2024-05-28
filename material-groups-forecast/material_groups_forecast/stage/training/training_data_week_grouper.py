@@ -18,5 +18,6 @@ class TrainingDataWeekGrouperImpl(TrainingDataGrouper):
         training_data_weekly["yearWeek"] = training_data_weekly.fecha_entrada.dt.strftime("%Y-w%V")
         training_data_weekly = training_data_weekly \
             .groupby(["forecastedGroup", "yearWeek"], as_index=False).agg(aggregations)
+        training_data_weekly = training_data_weekly.drop(columns=["yearWeek"])
 
         return training_data_weekly
