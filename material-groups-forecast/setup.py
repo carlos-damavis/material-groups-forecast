@@ -7,6 +7,8 @@ setup(
     url="",
     license="",
     install_requires=[
+        "db-dtypes==1.2.0",
+        "google-cloud-bigquery==3.23.1",
         "holidays==0.47",
         "numpy==1.24.4",
         "pandas==2.2.2",

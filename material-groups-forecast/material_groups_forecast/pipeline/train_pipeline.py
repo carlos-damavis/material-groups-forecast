@@ -1,5 +1,7 @@
 from datetime import date
+from typing import Optional
 
+from material_groups_forecast.repository.model_repository import ModelRepository
 from material_groups_forecast.repository.training_data_repository import TrainingDataRepository
 from material_groups_forecast.stage.common.regressors_adder import RegressorsAdder
 from material_groups_forecast.stage.training.models_all_groups_trainer import ModelsAllGroupsTrainer
@@ -16,7 +18,8 @@ class TrainPipeline:
             regressors_adder: RegressorsAdder,
             training_data_week_grouper: TrainingDataGrouper,
             training_data_month_grouper: TrainingDataGrouper,
-            models_all_groups_trainer: ModelsAllGroupsTrainer
+            models_all_groups_trainer: ModelsAllGroupsTrainer,
+            model_repository: ModelRepository
     ):
         self.training_data_repository = training_data_repository
         self.training_data_processor = training_data_processor
@@ -25,8 +28,9 @@ class TrainPipeline:
         self.training_data_week_grouper = training_data_week_grouper
         self.training_data_month_grouper = training_data_month_grouper
         self.models_all_groups_trainer = models_all_groups_trainer
+        self.model_repository = model_repository
 
-    def run(self, start_date: date, end_date: date) -> None:
+    def run(self, start_date: Optional[date] = None, end_date: Optional[date] = None) -> None:
 
         training_data = self.training_data_repository.get(start_date, end_date)
         training_data = self.training_data_processor.process(training_data)

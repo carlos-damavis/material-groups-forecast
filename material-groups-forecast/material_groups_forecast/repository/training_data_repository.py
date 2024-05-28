@@ -1,5 +1,6 @@
 import abc
 from datetime import date
+from typing import Optional
 
 from pandas import DataFrame
 
@@ -7,8 +8,9 @@ from pandas import DataFrame
 class TrainingDataRepository(abc.ABC):
 
     @abc.abstractmethod
-    def get(self, start_date: date, end_date: date) -> DataFrame:
-        ...
+    def get(self, start_date: Optional[date] = None, end_date: Optional[date] = None) -> DataFrame:
+        pass
 
-    def save_data(self, df: DataFrame, table_id: str, override: bool):
-        ...
+    @abc.abstractmethod
+    def save_data(self, df: DataFrame, table_id: str, override: bool) -> None:
+        pass

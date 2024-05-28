@@ -1,0 +1,12 @@
+{
+  "bigquery_credentials_path": "/home/cirp/Projects/Tirme/repositories/material-groups-forecast/pd001-datawarehouse-dev-8971e75c7f16.json",
+  "bigquery_project_id": "pd001-datawarehouse-dev",
+  "bigquery_dataset_id": "PREDICCION",
+  "bigquery_training_data_table":"pd001-datawarehouse-dev.SAP.AI-GESTION-CARGAS",
+  "bigquery_forecast_table": "pd001-datawarehouse-dev.SAP.ESCRITURA",
+  "storage_data_path": "gs://pd001-tirme-raw-2022/gestion_cargas/gestion_cargas",
+  "stage_data_path": "gs://pd001-tirme-staging",
+  "tmp_bigquery_bucket": "dataproc-europe-west1-temp",
+  "local_input_path": "",
+  "env_repository": "cloud"
+}

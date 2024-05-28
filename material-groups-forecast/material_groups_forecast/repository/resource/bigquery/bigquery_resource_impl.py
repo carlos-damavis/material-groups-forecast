@@ -1,25 +1,34 @@
-from datetime import date, timedelta, datetime
-from typing import Optional, List
+from datetime import timedelta, datetime
+from typing import Optional, List, Dict
 
-import google.api_core.exceptions
-from google.cloud import bigquery as bq
+from google.cloud.bigquery import Client as BigQueryClient, Table as BigQueryTable
+from google.cloud.exceptions import NotFound
 from pandas import DataFrame
 
-from repository.resource.bigquery.bigquery_resource import BigQueryResource
-from repository.resource.bigquery.client.client import BigQueryClient
+from material_groups_forecast.repository.resource.bigquery.bigquery_resource import BigQueryResource
 
-class BigQueryResourceImp(BigQueryResource):
 
-    def __init__(self,
-                 client: BigQueryClient,
-                 temporary_bucket: str):
-        self.client = client
+class BigQueryResourceImpl(BigQueryResource):
+
+    def __init__(self, credentials: Dict, temporary_bucket: str):
+        try:
+            self.client = BigQueryClient()
+        except TypeError:
+            self.client = BigQueryClient.from_service_account_info(credentials)
         self.temporary_bucket = temporary_bucket
 
-    def read(self, table_id: str, start_date: Optional[str] = None, end_date: Optional[str] = None,
-             date_column_name: Optional[str] = 'fecha_entrada') -> DataFrame:
+    def read(
+            self,
+            table_id: str,
+            start_date: Optional[str] = None,
+            end_date: Optional[str] = None,
+            date_column_name: Optional[str] = 'fecha_entrada'
+    ) -> DataFrame:
         table = self.client.get_table(table_id)
 
+        # FIXME: This is too specific to be a resource. Can we make it more general by passing a list of columns to
+        #  filter or dont use it and directly create queries in the repository??
+        # FIXME: start_date can be none while end_date is not none. Add other case??
         if start_date and end_date:
             query = f"""
                     SELECT *
@@ -66,15 +75,12 @@ class BigQueryResourceImp(BigQueryResource):
 
         self.client.query(query).result()
 
-    def upload(self,
-               df: DataFrame,
-               table_id: str,
-               override: bool,
-               expiration_time: Optional[timedelta] = None):
+    def upload(self, df: DataFrame, table_id: str, override: bool, expiration_time: Optional[timedelta] = None):
         try:
             self.client.get_table(table_id)
-        except google.api_core.exceptions.NotFound:
-            table = bq.Table(table_id)
+        except NotFound:
+            # FIXME: Does it work??
+            table = BigQueryTable(table_id)
 
             if expiration_time is not None:
                 table.expires = datetime.now() + expiration_time
