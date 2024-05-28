@@ -31,6 +31,7 @@ class TrainPipeline:
         training_data = self.training_data_repository.get(start_date, end_date)
         training_data = self.training_data_processor.process(training_data)
         training_data_day = self.training_data_day_grouper.group(training_data)
+
         training_data_day = self.regressors_adder.add(training_data_day)
         training_data_week = self.training_data_week_grouper.group(training_data_day)
         training_data_month = self.training_data_month_grouper.group(training_data_day)
@@ -42,3 +43,13 @@ class TrainPipeline:
         self.model_repository.write(models_day_level, "day")
         self.model_repository.write(models_week_level, "week")
         self.model_repository.write(models_month_level, "month")
+
+        # self.data_repository.save_data(training_data_day,
+        #                                table_id=self.config.get('bigquery_table_day_id'),
+        #                                override=False)
+        # self.data_repository.save_data(training_data_week,
+        #                                table_id=self.config.get('bigquery_table_week_id'),
+        #                                override=False)
+        # self.data_repository.save_data(training_data_month,
+        #                                table_id=self.config.get('bigquery_table_month_id'),
+        #                                override=False)

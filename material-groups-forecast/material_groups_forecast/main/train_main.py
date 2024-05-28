@@ -12,7 +12,9 @@ class TrainMain(TrainArguments):
         self.config.read(os.path.join(ROOT_PATH, "conf", "sources.ini"))
 
     def run(self):
-
+        args = TrainArguments
+        start_date = None if args.is_historic() else args.get_start_date()
+        end_date = None if args.is_historic() else args.get_end_date()
 
         train_pipeline = TrainPipeline(
             training_data_repository,
