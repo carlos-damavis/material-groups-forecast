@@ -39,5 +39,6 @@ class TrainPipeline:
         models_week_level = self.models_all_groups_trainer.train(training_data_week)
         models_month_level = self.models_all_groups_trainer.train(training_data_month)
 
-
-
+        self.model_repository.write(models_day_level, "day")
+        self.model_repository.write(models_week_level, "week")
+        self.model_repository.write(models_month_level, "month")
