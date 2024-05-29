@@ -22,7 +22,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "train_models=train_main:main"
+            "train_models=material_groups_forecast.main.train_main:main"
         ]
     },
     include_package_data=True,

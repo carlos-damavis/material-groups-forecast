@@ -3,7 +3,7 @@ from datetime import date
 from pandas import DataFrame
 from typing import Optional
 
-from material_groups_forecast.conf.config_getter import ConfigGetter
+from material_groups_forecast.conf.env_vars_getter import EnvVarsGetter
 from material_groups_forecast.repository.resource.bigquery.bigquery_resource import BigQueryResource
 from material_groups_forecast.repository.training_data_repository import TrainingDataRepository
 

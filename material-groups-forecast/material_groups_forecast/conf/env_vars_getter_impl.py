@@ -2,10 +2,10 @@ import json
 import os
 from typing import Any, Optional, Dict
 
-from material_groups_forecast.conf.config_getter import ConfigGetter
+from material_groups_forecast.conf.env_vars_getter import EnvVarsGetter
 
 
-class ConfigGetterImpl(ConfigGetter):
+class EnvVarsGetterImpl(EnvVarsGetter):
 
     @staticmethod
     def get(config_json_path: str) -> Dict:
